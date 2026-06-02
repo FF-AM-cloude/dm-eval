@@ -215,8 +215,8 @@ export default function Phase2IDE({ sessionId, candidateName, onSubmit }: Phase2
         </div>
 
         {/* 右侧：输出 + AI对话 */}
-        <div style={{ width: '360px', display: 'flex', flexDirection: 'column' }}>
-          <div style={{ height: '40%', borderBottom: '1px solid #30363d' }}>
+        <div style={{ width: '360px', display: 'flex', flexDirection: 'column', minHeight: 0 }}>
+          <div style={{ height: '40%', borderBottom: '1px solid #30363d', minHeight: 0, overflow: 'hidden' }}>
             <div style={{
               padding: '8px 12px',
               background: '#161b22',
@@ -226,11 +226,11 @@ export default function Phase2IDE({ sessionId, candidateName, onSubmit }: Phase2
             }}>
               运行输出
             </div>
-            <div style={{ height: 'calc(100% - 33px)' }}>
+            <div style={{ height: 'calc(100% - 33px)', minHeight: 0 }}>
               <OutputPanel output={output} error={error} loading={running} />
             </div>
           </div>
-          <div style={{ flex: 1 }}>
+          <div style={{ flex: 1, minHeight: 0, overflow: 'hidden' }}>
             <div style={{
               padding: '8px 12px',
               background: '#161b22',
@@ -240,7 +240,7 @@ export default function Phase2IDE({ sessionId, candidateName, onSubmit }: Phase2
             }}>
               AI 对话
             </div>
-            <div style={{ height: 'calc(100% - 33px)' }}>
+            <div style={{ height: 'calc(100% - 33px)', minHeight: 0 }}>
               <AIChatPanel config={aiConfig} sessionId={sessionId} />
             </div>
           </div>

@@ -1,4 +1,4 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Body
 from models.database import get_db
 
 router = APIRouter(prefix="/api/events", tags=["events"])
@@ -17,7 +17,7 @@ async def log_event(session_id: str, phase: int, event_type: str, event_data: st
 
 
 @router.post("/batch")
-async def batch_log_events(events: list):
+async def batch_log_events(events: list = Body()):
     conn = get_db()
     for e in events:
         conn.execute(

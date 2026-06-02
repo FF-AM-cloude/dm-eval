@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { AIConfig, AICall } from '../types';
 
 interface AIChatPanelProps {
@@ -13,6 +13,11 @@ export default function AIChatPanel({ config, sessionId, onCallComplete }: AICha
   ]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [messages, loading]);
 
   const sendMessage = async () => {
     if (!input.trim() || !config) return;
@@ -59,6 +64,7 @@ export default function AIChatPanel({ config, sessionId, onCallComplete }: AICha
     <div style={{ display: 'flex', flexDirection: 'column', height: '100%', fontSize: '13px' }}>
       <div style={{
         flex: 1,
+        minHeight: 0,
         overflow: 'auto',
         padding: '8px',
         background: '#0d1117',
@@ -81,6 +87,7 @@ export default function AIChatPanel({ config, sessionId, onCallComplete }: AICha
           </div>
         ))}
         {loading && <div style={{ color: '#8b949e' }}>AI 思考中...</div>}
+        <div ref={messagesEndRef} />
       </div>
 
       <div style={{ display: 'flex', gap: '4px', padding: '8px' }}>
