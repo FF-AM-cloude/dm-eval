@@ -1,0 +1,52 @@
+[
+  {
+    "id": "ds_001",
+    "category": "data_structures",
+    "difficulty": "L1",
+    "question": "Python中，以下哪个是可变类型？",
+    "code": "",
+    "options": ["list", "tuple", "str", "int"],
+    "correct": 0,
+    "time_limit_sec": 30
+  },
+  {
+    "id": "ds_002",
+    "category": "data_structures",
+    "difficulty": "L1",
+    "question": "以下哪种数据结构是先进后出（LIFO）？",
+    "code": "",
+    "options": ["栈", "队列", "哈希表", "二叉树"],
+    "correct": 0,
+    "time_limit_sec": 30
+  },
+  {
+    "id": "ds_003",
+    "category": "data_structures",
+    "difficulty": "L2",
+    "question": "哈希表查找的平均时间复杂度是？",
+    "code": "",
+    "options": ["O(1)", "O(n)", "O(log n)", "O(n²)"],
+    "correct": 0,
+    "time_limit_sec": 30
+  },
+  {
+    "id": "ds_004",
+    "category": "data_structures",
+    "difficulty": "L2",
+    "question": "Python中 set 的底层实现是？",
+    "code": "",
+    "options": ["哈希表", "红黑树", "链表", "数组"],
+    "correct": 0,
+    "time_limit_sec": 30
+  },
+  {
+    "id": "ds_005",
+    "category": "data_structures",
+    "difficulty": "L3",
+    "question": "以下排序算法中，最坏情况下时间复杂度最低的是？",
+    "code": "",
+    "options": ["归并排序", "快速排序", "冒泡排序", "选择排序"],
+    "correct": 0,
+    "time_limit_sec": 30
+  }
+]

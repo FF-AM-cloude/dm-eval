@@ -1,0 +1,52 @@
+[
+  {
+    "id": "http_001",
+    "category": "http_api",
+    "difficulty": "L1",
+    "question": "HTTP状态码 404 表示？",
+    "code": "",
+    "options": ["Not Found", "OK", "Internal Server Error", "Forbidden"],
+    "correct": 0,
+    "time_limit_sec": 30
+  },
+  {
+    "id": "http_002",
+    "category": "http_api",
+    "difficulty": "L1",
+    "question": "HTTP状态码 500 表示？",
+    "code": "",
+    "options": ["服务器内部错误", "请求成功", "未授权", "资源已移动"],
+    "correct": 0,
+    "time_limit_sec": 30
+  },
+  {
+    "id": "http_003",
+    "category": "http_api",
+    "difficulty": "L2",
+    "question": "以下哪个HTTP方法是幂等的？",
+    "code": "",
+    "options": ["PUT", "POST", "PATCH", "所有都不是"],
+    "correct": 0,
+    "time_limit_sec": 30
+  },
+  {
+    "id": "http_004",
+    "category": "http_api",
+    "difficulty": "L2",
+    "question": "JWT中的三个部分依次是？",
+    "code": "",
+    "options": ["Header.Payload.Signature", "Payload.Header.Signature", "Signature.Header.Payload", "Header.Signature.Payload"],
+    "correct": 0,
+    "time_limit_sec": 30
+  },
+  {
+    "id": "http_005",
+    "category": "http_api",
+    "difficulty": "L3",
+    "question": "CORS preflight请求使用什么HTTP方法？",
+    "code": "",
+    "options": ["OPTIONS", "HEAD", "GET", "PREFLIGHT"],
+    "correct": 0,
+    "time_limit_sec": 30
+  }
+]

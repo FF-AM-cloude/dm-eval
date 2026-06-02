@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+*.pyo
+dm_eval.db
+node_modules/
+dist/
+.env

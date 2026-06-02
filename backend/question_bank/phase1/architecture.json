@@ -1,0 +1,52 @@
+[
+  {
+    "id": "arch_001",
+    "category": "architecture",
+    "difficulty": "L1",
+    "question": "REST API中，GET请求应该用于？",
+    "code": "",
+    "options": ["获取资源", "创建资源", "删除资源", "更新资源"],
+    "correct": 0,
+    "time_limit_sec": 30
+  },
+  {
+    "id": "arch_002",
+    "category": "architecture",
+    "difficulty": "L1",
+    "question": "以下哪个是NoSQL数据库？",
+    "code": "",
+    "options": ["MongoDB", "MySQL", "PostgreSQL", "SQLite"],
+    "correct": 0,
+    "time_limit_sec": 30
+  },
+  {
+    "id": "arch_003",
+    "category": "architecture",
+    "difficulty": "L2",
+    "question": "什么是微服务架构的主要优势？",
+    "code": "",
+    "options": ["独立部署和扩展", "更少的网络调用", "单一数据库", "更简单的调试"],
+    "correct": 0,
+    "time_limit_sec": 30
+  },
+  {
+    "id": "arch_004",
+    "category": "architecture",
+    "difficulty": "L2",
+    "question": "以下哪个是ORM的主要目的？",
+    "code": "",
+    "options": ["对象-关系映射", "加速查询", "分布式事务", "数据可视化"],
+    "correct": 0,
+    "time_limit_sec": 30
+  },
+  {
+    "id": "arch_005",
+    "category": "architecture",
+    "difficulty": "L3",
+    "question": "在分布式系统中，CAP定理指的是？",
+    "code": "",
+    "options": ["一致性、可用性、分区容错性", "计算、分析、持久化", "缓存、认证、协议", "并发、原子性、持久性"],
+    "correct": 0,
+    "time_limit_sec": 30
+  }
+]

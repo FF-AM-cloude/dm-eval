@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  judge0:
+    image: judge0/judge0:1.13.0
+    ports:
+      - "2358:2358"
+    volumes:
+      - judge0-data:/var/lib/judge0
+    environment:
+      - JUDGE0_DAEMONIZE=false
+      - RAILS_ENV=production
+      - RAILS_SERVE_STATIC_FILES=true
+    privileged: true
+    restart: unless-stopped
+
+volumes:
+  judge0-data:

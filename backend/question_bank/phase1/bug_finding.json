@@ -1,0 +1,52 @@
+[
+  {
+    "id": "bug_001",
+    "category": "bug_finding",
+    "difficulty": "L1",
+    "question": "以下代码有什么bug？",
+    "code": "def get_first(items):\n    return items[1]",
+    "options": ["索引应为0", "变量名错误", "无返回值", "没有bug"],
+    "correct": 0,
+    "time_limit_sec": 30
+  },
+  {
+    "id": "bug_002",
+    "category": "bug_finding",
+    "difficulty": "L1",
+    "question": "以下代码有什么bug？",
+    "code": "def add(a, b):\n    return a + b\n\nresult = add(1, '2')",
+    "options": ["类型错误", "没有return", "缩进错误", "没有bug"],
+    "correct": 0,
+    "time_limit_sec": 30
+  },
+  {
+    "id": "bug_003",
+    "category": "bug_finding",
+    "difficulty": "L2",
+    "question": "以下代码有什么bug？",
+    "code": "def append_to(element, target=[]):\n    target.append(element)\n    return target",
+    "options": ["可变默认参数陷阱", "缺少返回值", "参数顺序错误", "没有bug"],
+    "correct": 0,
+    "time_limit_sec": 30
+  },
+  {
+    "id": "bug_004",
+    "category": "bug_finding",
+    "difficulty": "L2",
+    "question": "以下代码有什么bug？",
+    "code": "try:\n    1/0\nexcept:\n    pass\nexcept ZeroDivisionError:\n    print('error')",
+    "options": ["第二个except不可达", "语法错误", "1/0不会报错", "没有bug"],
+    "correct": 0,
+    "time_limit_sec": 30
+  },
+  {
+    "id": "bug_005",
+    "category": "bug_finding",
+    "difficulty": "L3",
+    "question": "以下代码有什么bug？",
+    "code": "import asyncio\n\nasync def fetch():\n    return 42\n\nasync def main():\n    result = fetch()\n    print(result)",
+    "options": ["缺少await", "async def不需要return", "print不能在async函数", "没有bug"],
+    "correct": 0,
+    "time_limit_sec": 30
+  }
+]

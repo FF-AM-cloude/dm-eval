@@ -1,0 +1,52 @@
+[
+  {
+    "id": "sql_001",
+    "category": "sql_comprehension",
+    "difficulty": "L1",
+    "question": "以下SQL查询返回什么？",
+    "code": "SELECT COUNT(*) FROM users WHERE age > 18",
+    "options": ["大于18岁的用户数", "所有用户数", "最大年龄", "年龄总和"],
+    "correct": 0,
+    "time_limit_sec": 30
+  },
+  {
+    "id": "sql_002",
+    "category": "sql_comprehension",
+    "difficulty": "L1",
+    "question": "以下SQL中，INNER JOIN 会返回什么？",
+    "code": "SELECT * FROM A INNER JOIN B ON A.id = B.a_id",
+    "options": ["A和B的交集匹配行", "A的所有行", "B的所有行", "A和B的笛卡尔积"],
+    "correct": 0,
+    "time_limit_sec": 30
+  },
+  {
+    "id": "sql_003",
+    "category": "sql_comprehension",
+    "difficulty": "L2",
+    "question": "以下SQL的结果是什么？",
+    "code": "SELECT department, AVG(salary) \nFROM employees \nGROUP BY department\nHAVING AVG(salary) > 50000",
+    "options": ["平均工资>50000的部门", "工资>50000的员工", "所有部门的平均工资", "按工资排序的部门"],
+    "correct": 0,
+    "time_limit_sec": 30
+  },
+  {
+    "id": "sql_004",
+    "category": "sql_comprehension",
+    "difficulty": "L2",
+    "question": "以下SQL中，LEFT JOIN 的结果行数最多可能是？",
+    "code": "SELECT * FROM customers c\nLEFT JOIN orders o ON c.id = o.customer_id",
+    "options": ["等于customers行数", "等于orders行数", "大于customers行数", "等于两个表行数之和"],
+    "correct": 2,
+    "time_limit_sec": 30
+  },
+  {
+    "id": "sql_005",
+    "category": "sql_comprehension",
+    "difficulty": "L3",
+    "question": "以下SQL中，哪个索引对以下查询最有效？",
+    "code": "SELECT * FROM orders\nWHERE status = 'active'\n  AND created_at > '2024-01-01'\nORDER BY amount DESC",
+    "options": ["复合索引(status, created_at, amount)", "单列索引(status)", "单列索引(amount)", "不需要索引"],
+    "correct": 0,
+    "time_limit_sec": 30
+  }
+]

@@ -1,0 +1,15 @@
+export type EvalEventType =
+  | 'keystroke'
+  | 'paste'
+  | 'code_change'
+  | 'code_run'
+  | 'ai_call'
+  | 'tab_switch'
+  | 'idle_start'
+  | 'idle_end'
+  | 'git_op'
+  | 'file_change'
+  | 'clipboard_blocked'
+  | 'hotkey_blocked'
+  | 'printscreen_blocked'
+  | 'contextmenu_blocked';

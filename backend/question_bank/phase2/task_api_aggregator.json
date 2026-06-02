@@ -1,0 +1,29 @@
+{
+  "id": "phase2_api_001",
+  "title": "API数据聚合服务",
+  "difficulty": "medium",
+  "time_reference_min": 90,
+  "spec": "## 任务：构建API数据聚合服务\n\n### 需求\n构建一个FastAPI服务，聚合多个外部API的数据并返回统一格式。\n\n### 要求\n1. 实现3个端点：/api/users、/api/orders、/api/aggregate\n2. /api/users 返回用户列表\n3. /api/orders 返回订单列表  \n4. /api/aggregate 聚合用户及其订单（JOIN-like）\n5. 数据存储在内存或SQLite\n6. 添加请求日志中间件\n\n### 交付要求\n- 代码push到指定Git仓库\n- 包含启动脚本\n- 包含API文档注释\n\n### 测试用例\n- GET /api/users 返回200 + 用户列表\n- GET /api/orders 返回200 + 订单列表  \n- GET /api/aggregate?user_id=1 返回该用户及其订单\n- POST /api/users 创建用户返回201\n- POST /api/orders 创建订单返回201",
+  "trap": {
+    "description": "spec要求添加'请求日志中间件'，但很多候选人会直接在每个路由加log语句。实际需要在FastAPI中添加@asynccontextmanager的lifespan或middleware。另外，POST /api/orders应验证user_id是否存在于users表。",
+    "test_case_ids": ["tc_log_001", "tc_val_001"]
+  },
+  "test_cases": [
+    {"id": "tc_log_001", "input": "请求日志", "expected": "日志应包含method、path、status_code、duration"},
+    {"id": "tc_val_001", "input": "POST /api/orders with non-existent user_id", "expected": "返回422或400"},
+    {"id": "tc_agg_001", "input": "GET /api/aggregate?user_id=1", "expected": "包含user信息和orders数组"},
+    {"id": "tc_agg_002", "input": "GET /api/aggregate?user_id=999", "expected": "返回空orders数组"}
+  ],
+  "toolchain_requirements": ["git_push"],
+  "test_data": {
+    "users": [
+      {"id": 1, "name": "Alice", "email": "alice@test.com"},
+      {"id": 2, "name": "Bob", "email": "bob@test.com"}
+    ],
+    "orders": [
+      {"id": 101, "user_id": 1, "product": "Laptop", "amount": 9999.00},
+      {"id": 102, "user_id": 1, "product": "Mouse", "amount": 99.00},
+      {"id": 103, "user_id": 2, "product": "Keyboard", "amount": 299.00}
+    ]
+  }
+}
