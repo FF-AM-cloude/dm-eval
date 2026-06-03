@@ -1,37 +1,77 @@
 [
   {
-    "id": "comp_001", "category": "complexity", "difficulty": "L1",
-    "question": "以下代码的时间复杂度是？",
-    "code": "for i in range(n):\n    print(i)",
-    "options": ["O(n)", "O(n²)", "O(log n)", "O(1)"],
-    "correct": 0, "time_limit_sec": 30
-  },
-  {
-    "id": "comp_002", "category": "complexity", "difficulty": "L2",
-    "question": "以下代码的时间复杂度是？",
-    "code": "for i in range(n):\n    for j in range(n):\n        print(i, j)",
-    "options": ["O(n²)", "O(n)", "O(2n)", "O(n log n)"],
-    "correct": 0, "time_limit_sec": 30
-  },
-  {
-    "id": "comp_003", "category": "complexity", "difficulty": "L2",
-    "question": "二分查找的时间复杂度是？",
+    "id": "cx_001",
+    "category": "complexity",
+    "difficulty": "L1",
+    "question": "二分查找的时间复杂度？",
     "code": "",
-    "options": ["O(log n)", "O(n)", "O(n log n)", "O(1)"],
-    "correct": 0, "time_limit_sec": 30
+    "options": [
+      "O(n)",
+      "O(n²)",
+      "O(1)",
+      "O(log n)"
+    ],
+    "correct": 3,
+    "time_limit_sec": 10
   },
   {
-    "id": "comp_004", "category": "complexity", "difficulty": "L1",
-    "question": "以下代码的时间复杂度是？",
-    "code": "def find(arr, target):\n    for i in range(len(arr)):\n        if arr[i] == target:\n            return i\n    return -1",
-    "options": ["O(n)", "O(1)", "O(log n)", "O(n²)"],
-    "correct": 0, "time_limit_sec": 30
+    "id": "cx_002",
+    "category": "complexity",
+    "difficulty": "L2",
+    "question": "这段代码的时间复杂度？",
+    "code": "for i in range(n):\n    for j in range(i):\n        print(i, j)",
+    "options": [
+      "O(n)",
+      "O(n log n)",
+      "O(n²)",
+      "O(2ⁿ)"
+    ],
+    "correct": 2,
+    "time_limit_sec": 15
   },
   {
-    "id": "comp_005", "category": "complexity", "difficulty": "L3",
-    "question": "以下代码的空间复杂度是？",
-    "code": "def fibonacci(n):\n    if n <= 1:\n        return n\n    return fibonacci(n-1) + fibonacci(n-2)",
-    "options": ["O(n)（调用栈深度为n）", "O(2ⁿ)", "O(1)", "O(n²)"],
-    "correct": 0, "time_limit_sec": 30
+    "id": "cx_003",
+    "category": "complexity",
+    "difficulty": "L2",
+    "question": "Python中 'x' in my_list 和 'x' in my_set 哪个更快？",
+    "code": "my_list = [1,2,...,1000000]\nmy_set = {1,2,...,1000000}",
+    "options": [
+      "set更快：O(1) vs list的O(n)",
+      "取决于元素位置",
+      "一样快",
+      "list更快"
+    ],
+    "correct": 0,
+    "time_limit_sec": 15
+  },
+  {
+    "id": "cx_004",
+    "category": "complexity",
+    "difficulty": "L3",
+    "question": "以下哪种排序算法最坏情况下仍为O(n log n)？",
+    "code": "",
+    "options": [
+      "快速排序",
+      "插入排序",
+      "归并排序",
+      "冒泡排序"
+    ],
+    "correct": 2,
+    "time_limit_sec": 25
+  },
+  {
+    "id": "cx_005",
+    "category": "complexity",
+    "difficulty": "L3",
+    "question": "递归斐波那契不加缓存的时间复杂度？",
+    "code": "def fib(n):\n    if n <= 1: return n\n    return fib(n-1) + fib(n-2)",
+    "options": [
+      "O(n²)",
+      "O(n log n)",
+      "O(n)",
+      "O(2ⁿ)"
+    ],
+    "correct": 3,
+    "time_limit_sec": 25
   }
 ]

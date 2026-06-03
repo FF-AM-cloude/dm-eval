@@ -1,0 +1,37 @@
+[
+  {
+    "id": "http_001", "category": "http_api", "difficulty": "L1",
+    "question": "HTTP 404状态码的含义是？",
+    "code": "",
+    "options": ["资源未找到", "服务器错误", "请求成功", "未授权"],
+    "correct": 0, "time_limit_sec": 30
+  },
+  {
+    "id": "http_002", "category": "http_api", "difficulty": "L1",
+    "question": "创建资源应该使用哪个HTTP方法？",
+    "code": "",
+    "options": ["POST", "GET", "PUT", "DELETE"],
+    "correct": 0, "time_limit_sec": 30
+  },
+  {
+    "id": "http_003", "category": "http_api", "difficulty": "L2",
+    "question": "HTTP 401和403的区别是？",
+    "code": "",
+    "options": ["401未认证，403无权限", "401无权限，403未认证", "两者相同", "401是客户端错误，403是服务端错误"],
+    "correct": 0, "time_limit_sec": 30
+  },
+  {
+    "id": "http_004", "category": "http_api", "difficulty": "L2",
+    "question": "RESTful API中，/api/users?page=2&per_page=20 使用了什么设计模式？",
+    "code": "",
+    "options": ["分页（Pagination）", "过滤（Filtering）", "排序（Sorting）", "搜索（Search）"],
+    "correct": 0, "time_limit_sec": 30
+  },
+  {
+    "id": "http_005", "category": "http_api", "difficulty": "L3",
+    "question": "需要部分更新一个资源，应该使用哪个HTTP方法？和全量更新的区别是？",
+    "code": "",
+    "options": ["PATCH（部分字段） vs PUT（全部字段）", "PUT（部分字段） vs PATCH（全部字段）", "POST vs PUT", "只有PUT支持部分更新"],
+    "correct": 0, "time_limit_sec": 30
+  }
+]

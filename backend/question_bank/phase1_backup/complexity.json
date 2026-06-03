@@ -1,0 +1,37 @@
+[
+  {
+    "id": "comp_001", "category": "complexity", "difficulty": "L1",
+    "question": "以下代码的时间复杂度是？",
+    "code": "for i in range(n):\n    print(i)",
+    "options": ["O(n)", "O(n²)", "O(log n)", "O(1)"],
+    "correct": 0, "time_limit_sec": 30
+  },
+  {
+    "id": "comp_002", "category": "complexity", "difficulty": "L2",
+    "question": "以下代码的时间复杂度是？",
+    "code": "for i in range(n):\n    for j in range(n):\n        print(i, j)",
+    "options": ["O(n²)", "O(n)", "O(2n)", "O(n log n)"],
+    "correct": 0, "time_limit_sec": 30
+  },
+  {
+    "id": "comp_003", "category": "complexity", "difficulty": "L2",
+    "question": "二分查找的时间复杂度是？",
+    "code": "",
+    "options": ["O(log n)", "O(n)", "O(n log n)", "O(1)"],
+    "correct": 0, "time_limit_sec": 30
+  },
+  {
+    "id": "comp_004", "category": "complexity", "difficulty": "L1",
+    "question": "以下代码的时间复杂度是？",
+    "code": "def find(arr, target):\n    for i in range(len(arr)):\n        if arr[i] == target:\n            return i\n    return -1",
+    "options": ["O(n)", "O(1)", "O(log n)", "O(n²)"],
+    "correct": 0, "time_limit_sec": 30
+  },
+  {
+    "id": "comp_005", "category": "complexity", "difficulty": "L3",
+    "question": "以下代码的空间复杂度是？",
+    "code": "def fibonacci(n):\n    if n <= 1:\n        return n\n    return fibonacci(n-1) + fibonacci(n-2)",
+    "options": ["O(n)（调用栈深度为n）", "O(2ⁿ)", "O(1)", "O(n²)"],
+    "correct": 0, "time_limit_sec": 30
+  }
+]

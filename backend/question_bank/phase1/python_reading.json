@@ -1,44 +1,122 @@
 [
   {
-    "id": "py_001", "category": "python_reading", "difficulty": "L1",
+    "id": "py_001",
+    "category": "python_reading",
+    "difficulty": "L1",
     "question": "以下代码的输出是什么？",
     "code": "x = [1, 2, 3, 4, 5]\nprint(x[1:4])",
-    "options": ["[1, 2, 3, 4]", "[2, 3, 4]", "[1, 2, 3]", "[2, 3, 4, 5]"],
-    "correct": 1, "time_limit_sec": 30
+    "options": [
+      "[1, 2, 3]",
+      "[2, 3, 4]",
+      "[1, 2, 3, 4]",
+      "[2, 3, 4, 5]"
+    ],
+    "correct": 1,
+    "time_limit_sec": 10
   },
   {
-    "id": "py_002", "category": "python_reading", "difficulty": "L2",
+    "id": "py_002",
+    "category": "python_reading",
+    "difficulty": "L1",
     "question": "以下代码的输出是什么？",
+    "code": "d = {'a': 1, 'b': 2}\nd['c'] = d.get('c', 3)\nprint(d)",
+    "options": [
+      "{'a':1,'b':2,'c':3}",
+      "{'c':3}",
+      "KeyError",
+      "{'a':1,'b':2}"
+    ],
+    "correct": 0,
+    "time_limit_sec": 10
+  },
+  {
+    "id": "py_003",
+    "category": "python_reading",
+    "difficulty": "L2",
+    "question": "以下代码的输出是什么？（可变默认参数陷阱）",
     "code": "def f(a, b=[]):\n    b.append(a)\n    return b\n\nprint(f(1))\nprint(f(2))",
-    "options": ["[1]\\n[2]", "[1]\\n[1, 2]", "[1]\\n[1]", "报错"],
-    "correct": 1, "time_limit_sec": 30
+    "options": [
+      "[1]\\n[2]",
+      "[1]\\n[1]",
+      "[1]\\n[1, 2]",
+      "报错"
+    ],
+    "correct": 2,
+    "time_limit_sec": 15
   },
   {
-    "id": "py_003", "category": "python_reading", "difficulty": "L2",
-    "question": "以下代码的输出是什么？",
-    "code": "a = [1, 2, 3]\nb = a\nb.append(4)\nprint(a)",
-    "options": ["[1, 2, 3]", "[1, 2, 3, 4]", "[4]", "报错"],
-    "correct": 1, "time_limit_sec": 30
+    "id": "py_004",
+    "category": "python_reading",
+    "difficulty": "L2",
+    "question": "以下代码的输出是什么？（浅拷贝陷阱）",
+    "code": "a = [[1, 2], [3, 4]]\nb = a.copy()\nb[0].append(5)\nprint(a)",
+    "options": [
+      "报错",
+      "[[1,2],[3,4,5]]",
+      "[[1,2],[3,4]]",
+      "[[1,2,5],[3,4]]"
+    ],
+    "correct": 3,
+    "time_limit_sec": 15
   },
   {
-    "id": "py_004", "category": "python_reading", "difficulty": "L3",
-    "question": "以下代码的输出是什么？",
+    "id": "py_005",
+    "category": "python_reading",
+    "difficulty": "L3",
+    "question": "以下代码的输出是什么？（闭包陷阱）",
     "code": "def make_funcs():\n    funcs = []\n    for i in range(3):\n        funcs.append(lambda: i)\n    return funcs\n\nresult = [f() for f in make_funcs()]\nprint(result)",
-    "options": ["[0, 1, 2]", "[2, 2, 2]", "[0, 0, 0]", "报错"],
-    "correct": 1, "time_limit_sec": 30
+    "options": [
+      "报错",
+      "[2, 2, 2]",
+      "[0, 0, 0]",
+      "[0, 1, 2]"
+    ],
+    "correct": 1,
+    "time_limit_sec": 25
   },
   {
-    "id": "py_005", "category": "python_reading", "difficulty": "L3",
-    "question": "以下代码的输出是什么？",
-    "code": "class A:\n    x = []\n\na = A()\nb = A()\na.x.append(1)\nprint(b.x)",
-    "options": ["[]", "[1]", "None", "报错"],
-    "correct": 1, "time_limit_sec": 30
+    "id": "py_006",
+    "category": "python_reading",
+    "difficulty": "L3",
+    "question": "以下代码的输出是什么？（类变量共享）",
+    "code": "class Dog:\n    tricks = []\n\na = Dog()\nb = Dog()\na.tricks.append('roll')\nprint(b.tricks)",
+    "options": [
+      "None",
+      "[]",
+      "报错",
+      "['roll']"
+    ],
+    "correct": 3,
+    "time_limit_sec": 25
   },
   {
-    "id": "py_006", "category": "python_reading", "difficulty": "L3",
-    "question": "以下代码的输出是什么？",
-    "code": "print([x for x in range(5) if x % 2 == 0 for y in range(x)])",
-    "options": ["[0, 2, 2, 4, 4, 4, 4]", "[2, 2, 4, 4, 4, 4]", "[0, 2, 4]", "[]"],
-    "correct": 1, "time_limit_sec": 30
+    "id": "py_007",
+    "category": "python_reading",
+    "difficulty": "L2",
+    "question": "以下代码的输出是什么？（is vs ==）",
+    "code": "a = [1, 2, 3]\nb = [1, 2, 3]\nprint(a == b, a is b)",
+    "options": [
+      "False False",
+      "True False",
+      "False True",
+      "True True"
+    ],
+    "correct": 1,
+    "time_limit_sec": 15
+  },
+  {
+    "id": "py_008",
+    "category": "python_reading",
+    "difficulty": "L3",
+    "question": "以下装饰器的执行顺序是什么？",
+    "code": "@dec_a\n@dec_b\ndef func(): pass\n\n# 等价于？",
+    "options": [
+      "报错",
+      "dec_b(dec_a(func))",
+      "dec_a(func) + dec_b(func)",
+      "dec_a(dec_b(func))"
+    ],
+    "correct": 3,
+    "time_limit_sec": 25
   }
 ]

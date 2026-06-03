@@ -1,37 +1,77 @@
 [
   {
-    "id": "sql_001", "category": "sql_comprehension", "difficulty": "L1",
-    "question": "这个查询返回几条记录？表中有5条记录，age分别为20,25,30,35,40",
-    "code": "SELECT * FROM users WHERE age > 25",
-    "options": ["3条", "2条", "4条", "5条"],
-    "correct": 0, "time_limit_sec": 30
+    "id": "sql_001",
+    "category": "sql_comprehension",
+    "difficulty": "L1",
+    "question": "表中有5条记录，age分别为20,25,30,35,40。此查询返回几条？",
+    "code": "SELECT * FROM users WHERE age >= 30",
+    "options": [
+      "2条",
+      "5条",
+      "3条",
+      "4条"
+    ],
+    "correct": 2,
+    "time_limit_sec": 10
   },
   {
-    "id": "sql_002", "category": "sql_comprehension", "difficulty": "L2",
-    "question": "这个查询的问题是什么？",
+    "id": "sql_002",
+    "category": "sql_comprehension",
+    "difficulty": "L2",
+    "question": "这个查询有什么问题？",
     "code": "SELECT department, AVG(salary)\nFROM employees\nWHERE AVG(salary) > 50000\nGROUP BY department",
-    "options": ["WHERE中不能用聚合函数，应该用HAVING", "缺少ORDER BY", "GROUP BY位置错误", "无问题"],
-    "correct": 0, "time_limit_sec": 30
+    "options": [
+      "WHERE中不能用聚合函数，应用HAVING",
+      "GROUP BY位置错误",
+      "无问题",
+      "缺少ORDER BY"
+    ],
+    "correct": 0,
+    "time_limit_sec": 15
   },
   {
-    "id": "sql_003", "category": "sql_comprehension", "difficulty": "L3",
-    "question": "LEFT JOIN和INNER JOIN的区别是什么？",
-    "code": "-- Table A: 3 rows, Table B: 2 rows, 1 matching row\nSELECT * FROM A LEFT JOIN B ON A.id = B.a_id\n-- vs\nSELECT * FROM A INNER JOIN B ON A.id = B.a_id",
-    "options": ["LEFT JOIN返回3行，INNER JOIN返回1行", "两者返回相同结果", "LEFT JOIN返回2行", "INNER JOIN返回3行"],
-    "correct": 0, "time_limit_sec": 30
+    "id": "sql_003",
+    "category": "sql_comprehension",
+    "difficulty": "L2",
+    "question": "Table A有3行，Table B有2行，1行匹配。LEFT JOIN和INNER JOIN各返回几行？",
+    "code": "SELECT * FROM A LEFT JOIN B ON A.id = B.a_id\n-- vs --\nSELECT * FROM A INNER JOIN B ON A.id = B.a_id",
+    "options": [
+      "LEFT=2行，INNER=1行",
+      "两者都是3行",
+      "LEFT=3行，INNER=1行",
+      "LEFT=5行，INNER=2行"
+    ],
+    "correct": 2,
+    "time_limit_sec": 15
   },
   {
-    "id": "sql_004", "category": "sql_comprehension", "difficulty": "L2",
+    "id": "sql_004",
+    "category": "sql_comprehension",
+    "difficulty": "L3",
     "question": "以下查询的作用是什么？",
-    "code": "SELECT department, COUNT(*)\nFROM employees\nGROUP BY department\nHAVING COUNT(*) > 5",
-    "options": ["返回超过5人的部门", "返回前5个部门", "返回部门编号大于5的", "报错"],
-    "correct": 0, "time_limit_sec": 30
+    "code": "SELECT name, salary,\n  RANK() OVER (ORDER BY salary DESC) as rank\nFROM employees",
+    "options": [
+      "按薪资降序排名（相同薪资同名次，跳号）",
+      "按薪资分组求平均",
+      "语法错误",
+      "按名字排序"
+    ],
+    "correct": 0,
+    "time_limit_sec": 25
   },
   {
-    "id": "sql_005", "category": "sql_comprehension", "difficulty": "L3",
-    "question": "以下两个查询的结果是否相同？",
-    "code": "-- 查询A\nSELECT * FROM A WHERE id IN (SELECT a_id FROM B)\n-- 查询B\nSELECT A.* FROM A INNER JOIN B ON A.id = B.a_id",
-    "options": ["可能不同（B中有重复a_id时）", "完全相同", "完全不同", "语法错误"],
-    "correct": 0, "time_limit_sec": 30
+    "id": "sql_005",
+    "category": "sql_comprehension",
+    "difficulty": "L1",
+    "question": "DELETE和TRUNCATE的区别？",
+    "code": "DELETE FROM users;\n-- vs --\nTRUNCATE TABLE users;",
+    "options": [
+      "两者完全相同",
+      "DELETE可回滚可WHERE，TRUNCATE不可",
+      "DELETE更快",
+      "TRUNCATE可回滚"
+    ],
+    "correct": 1,
+    "time_limit_sec": 10
   }
 ]

@@ -35,6 +35,7 @@ export default function Phase2IDE({ sessionId, candidateName, onSubmit }: Props)
   const [currentStep, setCurrentStep] = useState(0);
   const [leftTab, setLeftTab] = useState<'spec' | 'tests'>('spec');
   const [notes, setNotes] = useState('');
+  const [hint, setHint] = useState('🔧 请先在左侧配置AI API Key，测试连接后题目自动解锁');
   const [tabWarning, setTabWarning] = useState(false);
   const { logEvent, flush } = useEventLogger(sessionId, 2);
   const timer = useGlobalTimer();
@@ -70,6 +71,38 @@ export default function Phase2IDE({ sessionId, candidateName, onSubmit }: Props)
     return () => clearInterval(interval);
   }, [code, logEvent]);
 
+  // 动态提示：根据当前步骤自动更新
+  useEffect(() => {
+    switch (currentStep) {
+      case 0:
+        setHint('🔧 请先在左侧配置AI API Key，测试连接后题目自动解锁');
+        break;
+      case 1:
+        setHint('📖 阅读左侧任务说明，了解需要修复的bug和要添加的功能。可以使用右侧AI助手分析代码');
+        break;
+      case 2:
+        setHint('✏️ 在编辑器中修改代码。修改完成后，点击上方"复制"或"下载"按钮，拿到本地终端运行验证');
+        break;
+      case 3:
+        setHint('🖥️ 在您的终端运行: python contact_api.py → 然后用 curl http://localhost:8000/contacts 测试。验证通过后回来提交');
+        break;
+      case 4:
+        setHint('✅ 本地验证通过？请填写备注说明思路，然后点击"提交评估"。如有Git仓库也可以push代码');
+        break;
+    }
+  }, [currentStep]);
+
+  // 当用户从外部回来时（tab_switch_back），推进到步骤4
+  useEffect(() => {
+    const handler = () => {
+      if (!document.hidden && currentStep === 3) {
+        setCurrentStep(4);
+      }
+    };
+    document.addEventListener('visibilitychange', handler);
+    return () => document.removeEventListener('visibilitychange', handler);
+  }, [currentStep]);
+
   const loadTask = async () => {
     setTaskLoading(true);
     try {
@@ -88,13 +121,17 @@ export default function Phase2IDE({ sessionId, candidateName, onSubmit }: Props)
 
   const handleCodeChange = useCallback((newCode: string | undefined) => {
     if (newCode === undefined) return;
+    // 检测大段代码变更（可能是从AI粘贴）
+    if (Math.abs(newCode.length - code.length) > 100 && currentStep < 3) {
+      setHint('📋 检测到大段代码变更。点击"复制"或"下载"按钮，在本地终端运行 python contact_api.py 验证修复效果');
+    }
     setCode(newCode);
     if (currentStep < 2) setCurrentStep(2);
     if (debounceRef.current) clearTimeout(debounceRef.current);
     debounceRef.current = window.setTimeout(() => {
       logEvent('code_change', { length: newCode.length });
     }, 2000);
-  }, [logEvent, currentStep]);
+  }, [logEvent, currentStep, code]);
 
   const handleCopyCode = () => {
     navigator.clipboard.writeText(code);
@@ -158,6 +195,21 @@ export default function Phase2IDE({ sessionId, candidateName, onSubmit }: Props)
             ))}
           </div>
         </div>
+      </div>
+
+      {/* 动态提示栏 */}
+      <div style={{
+        padding: '8px 16px',
+        background: '#0b1d33',
+        borderBottom: '1px solid #1f3a5f',
+        fontSize: '13px',
+        color: '#58a6ff',
+        display: 'flex',
+        alignItems: 'center',
+        gap: '8px',
+      }}>
+        <span style={{ fontSize: '16px' }}>💡</span>
+        <span>{hint}</span>
       </div>
 
       {/* 三栏主体 */}
