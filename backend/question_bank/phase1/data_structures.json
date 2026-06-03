@@ -1,52 +1,37 @@
 [
   {
-    "id": "ds_001",
-    "category": "data_structures",
-    "difficulty": "L1",
-    "question": "Python中，以下哪个是可变类型？",
+    "id": "ds_001", "category": "data_structures", "difficulty": "L1",
+    "question": "Python中，以下哪种数据结构是无序的？",
     "code": "",
-    "options": ["list", "tuple", "str", "int"],
-    "correct": 0,
-    "time_limit_sec": 30
+    "options": ["set", "list", "tuple", "str"],
+    "correct": 0, "time_limit_sec": 30
   },
   {
-    "id": "ds_002",
-    "category": "data_structures",
-    "difficulty": "L1",
-    "question": "以下哪种数据结构是先进后出（LIFO）？",
+    "id": "ds_002", "category": "data_structures", "difficulty": "L1",
+    "question": "栈（Stack）的特点是？",
     "code": "",
-    "options": ["栈", "队列", "哈希表", "二叉树"],
-    "correct": 0,
-    "time_limit_sec": 30
+    "options": ["后进先出（LIFO）", "先进先出（FIFO）", "随机访问", "按优先级排序"],
+    "correct": 0, "time_limit_sec": 30
   },
   {
-    "id": "ds_003",
-    "category": "data_structures",
-    "difficulty": "L2",
-    "question": "哈希表查找的平均时间复杂度是？",
+    "id": "ds_003", "category": "data_structures", "difficulty": "L2",
+    "question": "哈希表（dict）查找的平均时间复杂度是？",
     "code": "",
-    "options": ["O(1)", "O(n)", "O(log n)", "O(n²)"],
-    "correct": 0,
-    "time_limit_sec": 30
+    "options": ["O(1)", "O(n)", "O(log n)", "O(n log n)"],
+    "correct": 0, "time_limit_sec": 30
   },
   {
-    "id": "ds_004",
-    "category": "data_structures",
-    "difficulty": "L2",
-    "question": "Python中 set 的底层实现是？",
-    "code": "",
-    "options": ["哈希表", "红黑树", "链表", "数组"],
-    "correct": 0,
-    "time_limit_sec": 30
+    "id": "ds_004", "category": "data_structures", "difficulty": "L2",
+    "question": "以下代码的输出是什么？",
+    "code": "d = {'a': 1, 'b': 2}\nd.setdefault('a', 100)\nd.setdefault('c', 3)\nprint(d)",
+    "options": ["{'a': 1, 'b': 2, 'c': 3}", "{'a': 100, 'b': 2, 'c': 3}", "{'a': 100, 'c': 3}", "报错"],
+    "correct": 0, "time_limit_sec": 30
   },
   {
-    "id": "ds_005",
-    "category": "data_structures",
-    "difficulty": "L3",
-    "question": "以下排序算法中，最坏情况下时间复杂度最低的是？",
-    "code": "",
-    "options": ["归并排序", "快速排序", "冒泡排序", "选择排序"],
-    "correct": 0,
-    "time_limit_sec": 30
+    "id": "ds_005", "category": "data_structures", "difficulty": "L3",
+    "question": "使用列表实现队列时，pop(0)的时间复杂度是？如何优化？",
+    "code": "queue = [1, 2, 3]\nx = queue.pop(0)  # 出队",
+    "options": ["O(n)，应使用collections.deque", "O(1)，无需优化", "O(log n)", "报错，list不能pop(0)"],
+    "correct": 0, "time_limit_sec": 30
   }
 ]

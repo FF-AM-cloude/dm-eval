@@ -1,52 +1,44 @@
 [
   {
-    "id": "py_read_001",
-    "category": "python_reading",
-    "difficulty": "L1",
-    "question": "以下Python代码的输出是什么？",
-    "code": "x = [1, 2, 3]\nprint(x[::-1])",
-    "options": ["[3, 2, 1]", "[1, 2, 3]", "[1, 3]", "报错"],
-    "correct": 0,
-    "time_limit_sec": 30
-  },
-  {
-    "id": "py_read_002",
-    "category": "python_reading",
-    "difficulty": "L1",
+    "id": "py_001", "category": "python_reading", "difficulty": "L1",
     "question": "以下代码的输出是什么？",
-    "code": "print(type([]) is list)",
-    "options": ["True", "False", "None", "报错"],
-    "correct": 0,
-    "time_limit_sec": 30
+    "code": "x = [1, 2, 3, 4, 5]\nprint(x[1:4])",
+    "options": ["[1, 2, 3, 4]", "[2, 3, 4]", "[1, 2, 3]", "[2, 3, 4, 5]"],
+    "correct": 1, "time_limit_sec": 30
   },
   {
-    "id": "py_read_003",
-    "category": "python_reading",
-    "difficulty": "L2",
+    "id": "py_002", "category": "python_reading", "difficulty": "L2",
     "question": "以下代码的输出是什么？",
     "code": "def f(a, b=[]):\n    b.append(a)\n    return b\n\nprint(f(1))\nprint(f(2))",
-    "options": ["[1] [2]", "[1] [1,2]", "[1] [1]", "报错"],
-    "correct": 1,
-    "time_limit_sec": 30
+    "options": ["[1]\\n[2]", "[1]\\n[1, 2]", "[1]\\n[1]", "报错"],
+    "correct": 1, "time_limit_sec": 30
   },
   {
-    "id": "py_read_004",
-    "category": "python_reading",
-    "difficulty": "L2",
+    "id": "py_003", "category": "python_reading", "difficulty": "L2",
     "question": "以下代码的输出是什么？",
-    "code": "x = 10\ndef foo():\n    x = 20\n    def bar():\n        nonlocal x\n        x = 30\n    bar()\n    print(x)\nfoo()",
-    "options": ["10", "20", "30", "报错"],
-    "correct": 2,
-    "time_limit_sec": 30
+    "code": "a = [1, 2, 3]\nb = a\nb.append(4)\nprint(a)",
+    "options": ["[1, 2, 3]", "[1, 2, 3, 4]", "[4]", "报错"],
+    "correct": 1, "time_limit_sec": 30
   },
   {
-    "id": "py_read_005",
-    "category": "python_reading",
-    "difficulty": "L3",
+    "id": "py_004", "category": "python_reading", "difficulty": "L3",
     "question": "以下代码的输出是什么？",
-    "code": "class A:\n    def __init__(self):\n        self.x = 1\n    \nclass B(A):\n    def __init__(self):\n        super().__init__()\n        self.x = 2\n        \nclass C(B):\n    def __init__(self):\n        A.__init__(self)\n        \nprint(C().x)",
-    "options": ["1", "2", "报错", "None"],
-    "correct": 0,
-    "time_limit_sec": 30
+    "code": "def make_funcs():\n    funcs = []\n    for i in range(3):\n        funcs.append(lambda: i)\n    return funcs\n\nresult = [f() for f in make_funcs()]\nprint(result)",
+    "options": ["[0, 1, 2]", "[2, 2, 2]", "[0, 0, 0]", "报错"],
+    "correct": 1, "time_limit_sec": 30
+  },
+  {
+    "id": "py_005", "category": "python_reading", "difficulty": "L3",
+    "question": "以下代码的输出是什么？",
+    "code": "class A:\n    x = []\n\na = A()\nb = A()\na.x.append(1)\nprint(b.x)",
+    "options": ["[]", "[1]", "None", "报错"],
+    "correct": 1, "time_limit_sec": 30
+  },
+  {
+    "id": "py_006", "category": "python_reading", "difficulty": "L3",
+    "question": "以下代码的输出是什么？",
+    "code": "print([x for x in range(5) if x % 2 == 0 for y in range(x)])",
+    "options": ["[0, 2, 2, 4, 4, 4, 4]", "[2, 2, 4, 4, 4, 4]", "[0, 2, 4]", "[]"],
+    "correct": 1, "time_limit_sec": 30
   }
 ]

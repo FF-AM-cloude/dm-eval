@@ -1,52 +1,37 @@
 [
   {
-    "id": "comp_001",
-    "category": "complexity",
-    "difficulty": "L1",
+    "id": "comp_001", "category": "complexity", "difficulty": "L1",
     "question": "以下代码的时间复杂度是？",
     "code": "for i in range(n):\n    print(i)",
     "options": ["O(n)", "O(n²)", "O(log n)", "O(1)"],
-    "correct": 0,
-    "time_limit_sec": 30
+    "correct": 0, "time_limit_sec": 30
   },
   {
-    "id": "comp_002",
-    "category": "complexity",
-    "difficulty": "L1",
+    "id": "comp_002", "category": "complexity", "difficulty": "L2",
     "question": "以下代码的时间复杂度是？",
     "code": "for i in range(n):\n    for j in range(n):\n        print(i, j)",
-    "options": ["O(n)", "O(n²)", "O(log n)", "O(2ⁿ)"],
-    "correct": 1,
-    "time_limit_sec": 30
+    "options": ["O(n²)", "O(n)", "O(2n)", "O(n log n)"],
+    "correct": 0, "time_limit_sec": 30
   },
   {
-    "id": "comp_003",
-    "category": "complexity",
-    "difficulty": "L2",
-    "question": "以下代码的时间复杂度是？",
-    "code": "def binary_search(arr, target):\n    l, r = 0, len(arr)-1\n    while l <= r:\n        mid = (l+r)//2\n        if arr[mid] == target: return mid\n        elif arr[mid] < target: l = mid+1\n        else: r = mid-1",
+    "id": "comp_003", "category": "complexity", "difficulty": "L2",
+    "question": "二分查找的时间复杂度是？",
+    "code": "",
     "options": ["O(log n)", "O(n)", "O(n log n)", "O(1)"],
-    "correct": 0,
-    "time_limit_sec": 30
+    "correct": 0, "time_limit_sec": 30
   },
   {
-    "id": "comp_004",
-    "category": "complexity",
-    "difficulty": "L2",
+    "id": "comp_004", "category": "complexity", "difficulty": "L1",
     "question": "以下代码的时间复杂度是？",
-    "code": "def quicksort(arr):\n    if len(arr) <= 1: return arr\n    pivot = arr[0]\n    left = [x for x in arr[1:] if x <= pivot]\n    right = [x for x in arr[1:] if x > pivot]\n    return quicksort(left) + [pivot] + quicksort(right)",
-    "options": ["O(n log n) 平均", "O(n)", "O(1)", "O(n²) 平均"],
-    "correct": 0,
-    "time_limit_sec": 30
+    "code": "def find(arr, target):\n    for i in range(len(arr)):\n        if arr[i] == target:\n            return i\n    return -1",
+    "options": ["O(n)", "O(1)", "O(log n)", "O(n²)"],
+    "correct": 0, "time_limit_sec": 30
   },
   {
-    "id": "comp_005",
-    "category": "complexity",
-    "difficulty": "L3",
+    "id": "comp_005", "category": "complexity", "difficulty": "L3",
     "question": "以下代码的空间复杂度是？",
-    "code": "def fib(n):\n    if n <= 1: return n\n    return fib(n-1) + fib(n-2)",
-    "options": ["O(n)", "O(2ⁿ)", "O(n²)", "O(log n)"],
-    "correct": 0,
-    "time_limit_sec": 30
+    "code": "def fibonacci(n):\n    if n <= 1:\n        return n\n    return fibonacci(n-1) + fibonacci(n-2)",
+    "options": ["O(n)（调用栈深度为n）", "O(2ⁿ)", "O(1)", "O(n²)"],
+    "correct": 0, "time_limit_sec": 30
   }
 ]

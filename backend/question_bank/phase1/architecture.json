@@ -1,52 +1,37 @@
 [
   {
-    "id": "arch_001",
-    "category": "architecture",
-    "difficulty": "L1",
-    "question": "REST API中，GET请求应该用于？",
+    "id": "arch_001", "category": "architecture", "difficulty": "L2",
+    "question": "哪种方式不适合处理用户上传的大文件？",
     "code": "",
-    "options": ["获取资源", "创建资源", "删除资源", "更新资源"],
-    "correct": 0,
-    "time_limit_sec": 30
+    "options": ["将整个文件读入内存再处理", "使用流式处理逐块读取", "异步处理后通知用户", "使用分片上传"],
+    "correct": 0, "time_limit_sec": 30
   },
   {
-    "id": "arch_002",
-    "category": "architecture",
-    "difficulty": "L1",
-    "question": "以下哪个是NoSQL数据库？",
-    "code": "",
-    "options": ["MongoDB", "MySQL", "PostgreSQL", "SQLite"],
-    "correct": 0,
-    "time_limit_sec": 30
+    "id": "arch_002", "category": "architecture", "difficulty": "L2",
+    "question": "以下哪种做法会导致数据库连接泄漏？",
+    "code": "def get_user(id):\n    conn = sqlite3.connect('db.sqlite')\n    row = conn.execute('SELECT * FROM users WHERE id=?', [id]).fetchone()\n    if not row:\n        raise ValueError('not found')\n    conn.close()\n    return row",
+    "options": ["raise时conn未关闭", "fetchone有问题", "execute参数格式错", "无问题"],
+    "correct": 0, "time_limit_sec": 30
   },
   {
-    "id": "arch_003",
-    "category": "architecture",
-    "difficulty": "L2",
-    "question": "什么是微服务架构的主要优势？",
+    "id": "arch_003", "category": "architecture", "difficulty": "L3",
+    "question": "微服务A调用微服务B，B挂了。最佳处理方式？",
     "code": "",
-    "options": ["独立部署和扩展", "更少的网络调用", "单一数据库", "更简单的调试"],
-    "correct": 0,
-    "time_limit_sec": 30
+    "options": ["熔断+降级+重试", "无限重试直到B恢复", "直接返回500给用户", "缓存B的最后响应永久使用"],
+    "correct": 0, "time_limit_sec": 30
   },
   {
-    "id": "arch_004",
-    "category": "architecture",
-    "difficulty": "L2",
-    "question": "以下哪个是ORM的主要目的？",
+    "id": "arch_004", "category": "architecture", "difficulty": "L1",
+    "question": "RESTful API中，更新资源应该使用哪个HTTP方法？",
     "code": "",
-    "options": ["对象-关系映射", "加速查询", "分布式事务", "数据可视化"],
-    "correct": 0,
-    "time_limit_sec": 30
+    "options": ["PUT/PATCH", "POST", "GET", "DELETE"],
+    "correct": 0, "time_limit_sec": 30
   },
   {
-    "id": "arch_005",
-    "category": "architecture",
-    "difficulty": "L3",
-    "question": "在分布式系统中，CAP定理指的是？",
+    "id": "arch_005", "category": "architecture", "difficulty": "L3",
+    "question": "在分布式系统中，CAP理论的含义是什么？",
     "code": "",
-    "options": ["一致性、可用性、分区容错性", "计算、分析、持久化", "缓存、认证、协议", "并发、原子性、持久性"],
-    "correct": 0,
-    "time_limit_sec": 30
+    "options": ["一致性、可用性、分区容忍性三者最多同时满足两个", "一致性、准确性、性能三者不可兼得", "成本、可用性、性能的三角权衡", "并发、原子性、持久性三者选二"],
+    "correct": 0, "time_limit_sec": 30
   }
 ]
