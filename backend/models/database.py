@@ -108,5 +108,11 @@ def init_db():
             discrimination REAL
         );
     """)
+    # migration: add token columns if not exist
+    for col in ["token TEXT UNIQUE", "token_used INTEGER DEFAULT 0"]:
+        try:
+            conn.execute(f"ALTER TABLE sessions ADD COLUMN {col}")
+        except:
+            pass
     conn.commit()
     conn.close()

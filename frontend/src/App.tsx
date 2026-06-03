@@ -36,7 +36,15 @@ export default function App() {
     }
   }, [phase, sessionId]);
 
-  const handleStart = async (name: string, email: string) => {
+  const handleStart = async (name: string, email: string, sessionId?: string) => {
+    if (sessionId) {
+      // token模式：session已存在
+      setSessionId(sessionId);
+      setCandidateName(name);
+      setPhase('phase1');
+      return;
+    }
+    // 兜底：无token时的旧逻辑
     try {
       const resp = await fetch('/api/sessions', {
         method: 'POST',
@@ -48,7 +56,7 @@ export default function App() {
       setCandidateName(name);
       setPhase('phase1');
     } catch {
-      alert('创建会话失败，请检查后端是否运行');
+      alert('创建会话失败');
     }
   };
 
