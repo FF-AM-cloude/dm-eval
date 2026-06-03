@@ -65,8 +65,8 @@ export default function Landing({ onStart }: LandingProps) {
 
         <div style={{ fontSize: '12px', color: '#8b949e', marginBottom: '16px', lineHeight: 1.6 }}>
           <p>⚡ 评估分两段：</p>
-          <p>1. 基本功速答 — 15-20题，每题30秒，不可回退</p>
-          <p>2. AI实战 — 在Monaco编辑器中完成任务</p>
+          <p>1. 基本功速答 — 15-20题，L1-L3难度，不可回退</p>
+          <p>2. AI实战 — 在编辑器中完成项目任务</p>
           <p style={{ marginTop: '8px', color: '#da3633' }}>
             ⚠ 开始后计时不可暂停，请确保网络稳定
           </p>
@@ -84,7 +84,7 @@ export default function Landing({ onStart }: LandingProps) {
         }}>
           <p style={{ color: '#c9d1d9', fontWeight: 600, marginBottom: '8px' }}>📋 测试须知</p>
           <p>1. 本测试分两段：基本功速答（约8分钟）+ AI实战项目（约90分钟）</p>
-          <p>2. 第一段禁止复制粘贴，每题限时30秒，不可回退</p>
+          <p>2. 第一段禁止复制粘贴，每题限时（L1: 10秒 / L2: 15秒 / L3: 25秒），至少3秒后方可作答，不可回退</p>
           <p>3. 第二段需要您在自己的电脑上运行代码，可以使用任何AI工具</p>
           <p>4. 系统将记录您的全部操作过程，包括AI对话、代码提交、页面切换等</p>
           <p>5. 点击"开始测试"即表示您知悉并同意上述规则</p>
