@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef } from 'react';
+import { useState, useCallback, useRef, useEffect } from 'react';
 import { AIConfig } from '../types';
 import MonacoEditor from '../components/MonacoEditor';
 import OutputPanel from '../components/OutputPanel';
@@ -53,11 +53,22 @@ export default function Phase2IDE({ sessionId, candidateName, onSubmit }: Phase2
       if (!resp.ok) throw new Error('获取任务失败');
       const data = await resp.json();
       setTask(data);
+      if (data.seed_code) {
+        setCode(data.seed_code);
+      }
     } catch (e: any) {
       setTaskError(e.message);
     }
     setTaskLoading(false);
   };
+
+  useEffect(() => {
+    if (!code) return;
+    const interval = setInterval(() => {
+      logEvent('code_snapshot', { code, length: code.length });
+    }, 60000);
+    return () => clearInterval(interval);
+  }, [code, logEvent]);
 
   const handleCodeChange = useCallback((newCode: string | undefined) => {
     if (newCode === undefined) return;
@@ -89,6 +100,7 @@ export default function Phase2IDE({ sessionId, candidateName, onSubmit }: Phase2
   };
 
   const handleSubmit = async () => {
+    logEvent('code_snapshot', { code, length: code.length });
     flush();
     try {
       await fetch(`/api/submit?session_id=${sessionId}`, { method: 'POST' });
@@ -190,7 +202,7 @@ export default function Phase2IDE({ sessionId, candidateName, onSubmit }: Phase2
 
           {/* Git */}
           <div style={{ borderTop: '1px solid #30363d' }}>
-            <GitPanel sessionId={sessionId} />
+            <GitPanel sessionId={sessionId} code={code} />
           </div>
         </div>
 

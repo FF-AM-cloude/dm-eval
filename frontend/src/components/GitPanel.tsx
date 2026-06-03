@@ -3,9 +3,10 @@ import { useState } from 'react';
 interface GitPanelProps {
   sessionId: string;
   repoUrl?: string;
+  code?: string;
 }
 
-export default function GitPanel({ sessionId, repoUrl = '' }: GitPanelProps) {
+export default function GitPanel({ sessionId, repoUrl = '', code }: GitPanelProps) {
   const [platform, setPlatform] = useState<'github' | 'gitee'>('github');
   const [token, setToken] = useState('');
   const [pushing, setPushing] = useState(false);
@@ -26,6 +27,7 @@ export default function GitPanel({ sessionId, repoUrl = '' }: GitPanelProps) {
           token,
           repo_url: repoUrl,
           branch: `candidate_${sessionId}`,
+          code: code || '',
         }),
       });
       const data = await resp.json();
