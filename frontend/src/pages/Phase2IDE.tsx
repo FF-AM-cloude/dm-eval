@@ -134,20 +134,23 @@ export default function Phase2IDE({ sessionId, candidateName, onSubmit }: Props)
   }, [logEvent, currentStep, code]);
 
   const handleCopyCode = () => {
-    navigator.clipboard.writeText(code);
+    const textarea = document.createElement('textarea');
+    textarea.value = code;
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand('copy');
+    document.body.removeChild(textarea);
     logEvent('code_copied', { length: code.length });
     if (currentStep < 3) setCurrentStep(3);
-    alert('代码已复制到剪贴板，请在终端中保存为文件并运行');
+    alert('代码已复制到剪贴板');
   };
 
   const handleDownload = () => {
-    const blob = new Blob([code], { type: 'text/plain' });
-    const url = URL.createObjectURL(blob);
+    const dataUri = 'data:text/plain;charset=utf-8,' + encodeURIComponent(code);
     const a = document.createElement('a');
-    a.href = url;
+    a.href = dataUri;
     a.download = 'contact_api.py';
     a.click();
-    URL.revokeObjectURL(url);
     logEvent('code_downloaded', { length: code.length });
     if (currentStep < 3) setCurrentStep(3);
   };
