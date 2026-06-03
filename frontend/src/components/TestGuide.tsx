@@ -1,5 +1,27 @@
 import { useState, useEffect, useRef } from 'react';
 
+const bannerStyle: React.CSSProperties = {
+  position: 'fixed',
+  top: 0,
+  left: '50%',
+  transform: 'translateX(-50%)',
+  zIndex: 1000,
+  display: 'flex',
+  alignItems: 'center',
+  gap: 10,
+  padding: '10px 28px',
+  borderRadius: '0 0 12px 12px',
+  background: 'linear-gradient(135deg, #f59e0b, #d97706)',
+  color: '#1c1917',
+  fontSize: 15,
+  fontWeight: 700,
+  cursor: 'pointer',
+  border: 'none',
+  boxShadow: '0 4px 20px rgba(245, 158, 11, 0.5)',
+  letterSpacing: '0.5px',
+  transition: 'box-shadow 0.2s, transform 0.2s',
+};
+
 const overlayStyle: React.CSSProperties = {
   position: 'fixed',
   inset: 0,
@@ -18,28 +40,6 @@ const drawerStyle: React.CSSProperties = {
   color: '#c9d1d9',
   display: 'flex',
   flexDirection: 'column',
-  transition: 'transform 0.3s ease',
-};
-
-const buttonStyle: React.CSSProperties = {
-  position: 'fixed',
-  bottom: 24,
-  right: 24,
-  zIndex: 1000,
-  width: 56,
-  height: 56,
-  borderRadius: '50%',
-  border: '1px solid #30363d',
-  background: '#21262d',
-  color: '#c9d1d9',
-  fontSize: 13,
-  cursor: 'pointer',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  lineHeight: 1.2,
-  textAlign: 'center',
-  boxShadow: '0 4px 12px rgba(0,0,0,0.4)',
 };
 
 const headerStyle: React.CSSProperties = {
@@ -98,6 +98,7 @@ const linkStyle: React.CSSProperties = {
 export default function TestGuide() {
   const [open, setOpen] = useState(false);
   const drawerRef = useRef<HTMLDivElement>(null);
+  const [hover, setHover] = useState(false);
 
   useEffect(() => {
     if (!open) return;
@@ -106,7 +107,6 @@ export default function TestGuide() {
         setOpen(false);
       }
     };
-    // delay so the same click that opened doesn't immediately close
     const timer = setTimeout(() => document.addEventListener('click', handler), 0);
     return () => {
       clearTimeout(timer);
@@ -117,11 +117,15 @@ export default function TestGuide() {
   return (
     <>
       <button
-        style={buttonStyle}
+        style={{ ...bannerStyle, boxShadow: hover ? '0 6px 28px rgba(245, 158, 11, 0.7)' : '0 4px 20px rgba(245, 158, 11, 0.5)' }}
         onClick={() => setOpen(true)}
-        title="打开测试指南"
+        onMouseEnter={() => setHover(true)}
+        onMouseLeave={() => setHover(false)}
+        title="查看测试指南"
       >
-        📖 指南
+        <span style={{ fontSize: 20 }}>📖</span>
+        测试指南
+        <span style={{ fontSize: 11, opacity: 0.7, fontWeight: 400 }}>点击展开</span>
       </button>
 
       {open && (
