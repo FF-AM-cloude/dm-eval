@@ -169,7 +169,9 @@ async def get_phase2_task(session_id: str):
         [f'%"assigned_session":"{session_id}"%'],
     ).fetchone()
     if row:
-        return json.loads(row["content_json"])
+        task = json.loads(row["content_json"])
+        _load_seed_code(task, os.path.join(os.path.dirname(__file__), "..", "question_bank", "phase2"))
+        return task
 
     # 从JSON文件加载并随机选一个
     phase2_dir = os.path.join(os.path.dirname(__file__), "..", "question_bank", "phase2")
@@ -183,6 +185,9 @@ async def get_phase2_task(session_id: str):
 
     selected = random.choice(tasks)
     selected["assigned_session"] = session_id
+
+    # 加载seed代码
+    _load_seed_code(selected, phase2_dir)
 
     # 写入操作串行化
     content_json = json.dumps(selected, ensure_ascii=False)
@@ -203,3 +208,13 @@ async def complete_phase1(session_id: str):
             [session_id],
         )
     return {"status": "phase2"}
+
+
+def _load_seed_code(task: dict, phase2_dir: str):
+    """如果任务有seed_code_file字段，加载种子代码到task中"""
+    import os
+    if "seed_code_file" in task:
+        seed_path = os.path.join(phase2_dir, task["seed_code_file"])
+        if os.path.exists(seed_path):
+            with open(seed_path) as f:
+                task["seed_code"] = f.read()
