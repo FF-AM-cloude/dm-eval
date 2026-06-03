@@ -72,6 +72,24 @@ export default function Landing({ onStart }: LandingProps) {
           </p>
         </div>
 
+        <div style={{
+          margin: '20px 0',
+          padding: '16px',
+          background: '#161b22',
+          border: '1px solid #30363d',
+          borderRadius: '8px',
+          fontSize: '13px',
+          lineHeight: 1.8,
+          color: '#8b949e',
+        }}>
+          <p style={{ color: '#c9d1d9', fontWeight: 600, marginBottom: '8px' }}>📋 测试须知</p>
+          <p>1. 本测试分两段：基本功速答（约8分钟）+ AI实战项目（约90分钟）</p>
+          <p>2. 第一段禁止复制粘贴，每题限时30秒，不可回退</p>
+          <p>3. 第二段需要您在自己的电脑上运行代码，可以使用任何AI工具</p>
+          <p>4. 系统将记录您的全部操作过程，包括AI对话、代码提交、页面切换等</p>
+          <p>5. 点击"开始测试"即表示您知悉并同意上述规则</p>
+        </div>
+
         <button
           onClick={handleStart}
           disabled={!name.trim() || loading}

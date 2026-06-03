@@ -17,6 +17,7 @@ export default function Phase1Quiz({ sessionId, onComplete }: Phase1QuizProps) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [submitting, setSubmitting] = useState(false);
+  const [canSubmit, setCanSubmit] = useState(false);
   const { logEvent } = useEventLogger(sessionId, 1);
 
   useClipboardGuard(true, logEvent);
@@ -37,6 +38,13 @@ export default function Phase1Quiz({ sessionId, onComplete }: Phase1QuizProps) {
   useEffect(() => {
     if (currentQ) reset(currentQ.time_limit_sec);
   }, [currentIndex, currentQ]);
+
+  // 最低答题时间限制：每道题3秒后才允许提交
+  useEffect(() => {
+    setCanSubmit(false);
+    const timer = setTimeout(() => setCanSubmit(true), 3000);
+    return () => clearTimeout(timer);
+  }, [currentIndex]);
 
   const fetchQuestions = async () => {
     try {
@@ -150,8 +158,8 @@ export default function Phase1Quiz({ sessionId, onComplete }: Phase1QuizProps) {
             {currentQ.options.map((opt, idx) => (
               <button
                 key={idx}
-                onClick={() => handleAnswer(idx)}
-                disabled={submitting}
+                onClick={() => canSubmit && handleAnswer(idx)}
+                disabled={submitting || !canSubmit}
                 style={{
                   textAlign: 'left',
                   padding: '12px 16px',
@@ -160,7 +168,8 @@ export default function Phase1Quiz({ sessionId, onComplete }: Phase1QuizProps) {
                   borderRadius: '6px',
                   color: '#c9d1d9',
                   fontSize: '14px',
-                  cursor: 'pointer',
+                  cursor: canSubmit ? 'pointer' : 'not-allowed',
+                  opacity: canSubmit ? 1 : 0.4,
                   transition: 'border-color 0.15s',
                 }}
                 onMouseEnter={e => e.currentTarget.style.borderColor = '#58a6ff'}
