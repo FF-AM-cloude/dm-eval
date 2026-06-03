@@ -17,7 +17,7 @@ export default function Landing({ onStart }: Props) {
       setError('请输入您的姓名');
       return;
     }
-    if (password !== PASSWORD) {
+    if (password.trim() !== PASSWORD) {
       setError('密码错误');
       return;
     }
@@ -39,6 +39,7 @@ export default function Landing({ onStart }: Props) {
             onChange={e => { setName(e.target.value); setError(''); }}
             placeholder="请输入姓名"
             style={inputStyle}
+            autoComplete="name"
             autoFocus
           />
         </div>
@@ -51,6 +52,7 @@ export default function Landing({ onStart }: Props) {
             onChange={e => { setPassword(e.target.value); setError(''); }}
             placeholder="请输入密码"
             style={inputStyle}
+            autoComplete="new-password"
             onKeyDown={e => { if (e.key === 'Enter') handleStart(); }}
           />
         </div>
