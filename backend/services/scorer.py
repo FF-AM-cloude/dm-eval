@@ -162,39 +162,41 @@ async def score_session(session_id: str) -> dict:
     }
 
     # ========== 维度4：工程交付力 ==========
+    # 基于git push事件和代码快照评估
     delivery_score = 0
-    last_run = None
-    for e in reversed(events):
-        if e["event_type"] == "code_run":
-            last_run = e
-            break
 
-    if last_run:
-        try:
-            run_data = json.loads(last_run["event_data"]) if isinstance(last_run["event_data"], str) else last_run["event_data"]
-            status = run_data.get("status", "")
-            if "Accepted" in str(status) or status == "success":
-                delivery_score = 90
-            elif "error" not in str(status).lower():
-                delivery_score = 70
-            else:
-                delivery_score = 30
-        except:
-            delivery_score = 30
-    else:
-        delivery_score = 0
+    git_events_delivery = [e for e in events if e["event_type"] == "git_op"]
+    code_snapshots = [e for e in events if e["event_type"] == "code_snapshot"]
+    seed_copied = any(e["event_type"] == "seed_code_copied" for e in events)
+    submission = any(e["event_type"] == "submission" for e in events)
+
+    if submission:
+        delivery_score += 30  # 完成了提交流程
+    if git_events_delivery:
+        delivery_score += 30  # 做了git操作
+    if seed_copied:
+        delivery_score += 10  # 至少拿到了代码开始做
+    if len(code_snapshots) > 0:
+        delivery_score += 10  # 有代码改动
+    # AI对话中是否讨论了修复方案
+    if ai_calls and len(ai_calls) >= 3:
+        delivery_score += 20  # 有实质性的AI交互
+
+    delivery_score = min(100, delivery_score)
 
     report["delivery"] = {
         "score": delivery_score,
-        "last_run_status": "found" if last_run else "never_run",
+        "submitted": submission,
+        "git_operations": len(git_events_delivery),
+        "code_snapshots": len(code_snapshots),
+        "seed_copied": seed_copied,
     }
 
-    if delivery_score == 0:
+    # 一票否决改为：没有任何操作
+    if not submission and not git_events_delivery and not seed_copied and len(ai_calls) == 0:
         report["eliminated"] = True
-        report["elimination_reason"] = "代码从未成功运行"
-        report["total_score"] = round(
-            fundamentals_score * 0.20 + ai_leverage_score * 0.30, 1
-        )
+        report["elimination_reason"] = "未进行任何实质性操作"
+        report["total_score"] = round(fundamentals_score * 0.20, 1)
         _save_report(session_id, report)
         return report
 
