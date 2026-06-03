@@ -28,7 +28,7 @@ async def submit_session(session_id: str):
 
 
 @router.post("/git-push")
-async def git_push(req: GitConfig):
+async def git_push(req: GitConfig, code: str = ""):
     from services.github_push import push_to_git
     try:
         result = await push_to_git(
@@ -36,6 +36,7 @@ async def git_push(req: GitConfig):
             token=req.token,
             branch=req.branch,
             session_id=req.session_id,
+            code=code,
         )
         return result
     except Exception as e:

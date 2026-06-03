@@ -149,8 +149,8 @@ async def submit_answer(req: QuizAnswerRequest):
             [req.session_id, req.question_id, req.answer, is_correct, time_spent],
         )
         wc.execute(
-            "UPDATE questions SET answer_count=answer_count+1, correct_count=correct_count+?, avg_time_ms=(avg_time_ms+?)/2 WHERE id=?",
-            [is_correct, time_spent, req.question_id],
+            "UPDATE questions SET answer_count=answer_count+1, correct_count=correct_count+?, avg_time_ms=CASE WHEN answer_count=0 THEN ? ELSE (avg_time_ms*answer_count+?)/(answer_count+1) END WHERE id=?",
+            [is_correct, time_spent, time_spent, req.question_id],
         )
 
     return {"correct": is_correct, "correct_answer": correct_answer}

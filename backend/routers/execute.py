@@ -1,3 +1,4 @@
+import time
 import httpx
 from fastapi import APIRouter, HTTPException
 from models.schemas import ExecuteRequest
@@ -40,7 +41,7 @@ async def execute_code(req: ExecuteRequest):
                 [req.session_id, 2, "code_run", str({
                     "status": result.get("status", {}).get("description"),
                     "time": result.get("time"),
-                }), result.get("created_at", 0) * 1000 or 0],
+                }), int(time.time() * 1000)],
             )
     except Exception:
         pass

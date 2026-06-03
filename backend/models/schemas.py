@@ -59,3 +59,4 @@ class GitConfig(BaseModel):
     token: str
     repo_url: str
     branch: str
+    code: str = ""
