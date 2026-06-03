@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./data:/app/data
+    environment:
+      - DM_EVAL_DB=/app/data/dm_eval.db
+      - JUDGE0_URL=http://judge0:2358
+    depends_on:
+      - judge0
+
+  judge0:
+    image: judge0/judge0-ce:1.13.1
+    ports:
+      - "2358:2358"
+    environment:
+      - REDIS_URL=redis://redis:6379
+      - POSTGRES_HOST=postgres
+    depends_on:
+      - redis
+      - postgres
+
+  redis:
+    image: redis:7-alpine
+
+  postgres:
+    image: postgres:15-alpine
+    environment:
+      - POSTGRES_USER=judge0
+      - POSTGRES_PASSWORD=judge0
+      - POSTGRES_DB=judge0
