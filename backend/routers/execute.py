@@ -1,7 +1,7 @@
 import httpx
 from fastapi import APIRouter, HTTPException
 from models.schemas import ExecuteRequest
-from models.database import get_db
+from models.database import get_db, write_transaction
 
 JUDGE0_URL = "http://localhost:2358"
 
@@ -34,16 +34,14 @@ async def execute_code(req: ExecuteRequest):
 
     # 记录事件
     try:
-        conn = get_db()
-        conn.execute(
-            "INSERT INTO event_log (session_id, phase, event_type, event_data, timestamp_ms) VALUES (?,?,?,?,?)",
-            [req.session_id, 2, "code_run", str({
-                "status": result.get("status", {}).get("description"),
-                "time": result.get("time"),
-            }), result.get("created_at", 0) * 1000 or 0],
-        )
-        conn.commit()
-        conn.close()
+        with write_transaction() as conn:
+            conn.execute(
+                "INSERT INTO event_log (session_id, phase, event_type, event_data, timestamp_ms) VALUES (?,?,?,?,?)",
+                [req.session_id, 2, "code_run", str({
+                    "status": result.get("status", {}).get("description"),
+                    "time": result.get("time"),
+                }), result.get("created_at", 0) * 1000 or 0],
+            )
     except Exception:
         pass
 

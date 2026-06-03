@@ -1,5 +1,5 @@
 import json
-from models.database import get_db
+from models.database import get_db, write_transaction
 
 
 async def score_session(session_id: str) -> dict:
@@ -12,7 +12,6 @@ async def score_session(session_id: str) -> dict:
     ).fetchall()
 
     if not answers:
-        conn.close()
         return {"error": "no answers found"}
 
     correct_count = sum(1 for a in answers if a["correct"])
@@ -39,8 +38,7 @@ async def score_session(session_id: str) -> dict:
     if fundamentals_score < 40:
         report["eliminated"] = True
         report["elimination_reason"] = "基本功分数低于门槛（40分）"
-        _save_report(conn, session_id, report)
-        conn.close()
+        _save_report(session_id, report)
         return report
 
     # === 维度2：AI杠杆力 ===
@@ -49,7 +47,7 @@ async def score_session(session_id: str) -> dict:
     ).fetchall()
 
     if ai_calls:
-        nav_score = 80  # 默认中等
+        nav_score = 80
         first_prompt = ai_calls[0]["prompt"] if ai_calls else ""
         decomp_score = _review_prompt_quality(first_prompt)
         effective_prompts = sum(1 for c in ai_calls if c["success"])
@@ -80,24 +78,10 @@ async def score_session(session_id: str) -> dict:
         "providers_used": list(providers_used),
     }
 
-    # === 维度3：工具链（简化版） ===
-    report["toolchain"] = {
-        "score": 0,
-        "git_time_sec": 0,
-    }
-
-    # === 维度4：工程交付力 ===
-    report["delivery"] = {
-        "score": 0,
-        "test_pass_rate": 0,
-        "code_quality_grade": "N/A",
-    }
-
-    # === 维度5：学习适应力 ===
-    report["adaptability"] = {
-        "score": 0,
-        "comprehension_time_sec": 0,
-    }
+    # === 维度3-5（简化版） ===
+    report["toolchain"] = {"score": 0, "git_time_sec": 0}
+    report["delivery"] = {"score": 0, "test_pass_rate": 0, "code_quality_grade": "N/A"}
+    report["adaptability"] = {"score": 0, "comprehension_time_sec": 0}
 
     # === 综合评分 ===
     total = (
@@ -115,18 +99,16 @@ async def score_session(session_id: str) -> dict:
         "y": round(ai_leverage_score, 1),
     }
 
-    _save_report(conn, session_id, report)
-    conn.close()
+    _save_report(session_id, report)
     return report
 
 
 def _review_prompt_quality(prompt_json: str) -> float:
-    """简化版prompt质量评估"""
     try:
         messages = json.loads(prompt_json)
         prompt_text = " ".join(m.get("content", "") for m in messages)
 
-        score = 50  # 基础分
+        score = 50
         if len(prompt_text) > 100:
             score += 10
         if any(kw in prompt_text.lower() for kw in ["step", "首先", "然后", "first", "then"]):
@@ -140,9 +122,9 @@ def _review_prompt_quality(prompt_json: str) -> float:
         return 30
 
 
-def _save_report(conn, session_id: str, report: dict):
-    conn.execute(
-        "UPDATE sessions SET total_score=?, report_json=?, status='scored' WHERE id=?",
-        [report.get("total_score", 0), json.dumps(report, ensure_ascii=False), session_id],
-    )
-    conn.commit()
+def _save_report(session_id: str, report: dict):
+    with write_transaction() as conn:
+        conn.execute(
+            "UPDATE sessions SET total_score=?, report_json=?, status='scored' WHERE id=?",
+            [report.get("total_score", 0), json.dumps(report, ensure_ascii=False), session_id],
+        )

@@ -5,3 +5,7 @@ dm_eval.db
 node_modules/
 dist/
 .env
+*.log
+*.db-shm
+*.db-wal
+SESSION_NOTES.md

@@ -2,7 +2,7 @@ import json
 import time
 import httpx
 from fastapi import APIRouter
-from models.database import get_db
+from models.database import get_db, write_transaction
 from models.schemas import AIChatRequest
 
 router = APIRouter(prefix="/api/ai", tags=["ai"])
@@ -36,21 +36,19 @@ async def proxy_ai_call(req: AIChatRequest):
 
     # 记录到数据库
     try:
-        conn = get_db()
-        conn.execute(
-            "INSERT INTO ai_calls (session_id, provider, model, prompt, response, latency_ms, success) VALUES (?,?,?,?,?,?,?)",
-            [
-                req.session_id,
-                req.provider,
-                req.model,
-                json.dumps(req.messages, ensure_ascii=False),
-                json.dumps(result, ensure_ascii=False) if isinstance(result, dict) else str(result),
-                latency_ms,
-                success,
-            ],
-        )
-        conn.commit()
-        conn.close()
+        with write_transaction() as conn:
+            conn.execute(
+                "INSERT INTO ai_calls (session_id, provider, model, prompt, response, latency_ms, success) VALUES (?,?,?,?,?,?,?)",
+                [
+                    req.session_id,
+                    req.provider,
+                    req.model,
+                    json.dumps(req.messages, ensure_ascii=False),
+                    json.dumps(result, ensure_ascii=False) if isinstance(result, dict) else str(result),
+                    latency_ms,
+                    success,
+                ],
+            )
     except Exception:
         pass
 

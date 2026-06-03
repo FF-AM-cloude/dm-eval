@@ -1,21 +1,47 @@
 import sqlite3
 import json
 import os
+import threading
+from contextlib import contextmanager
 
 DB_PATH = os.environ.get("DM_EVAL_DB", "dm_eval.db")
 
+_conn = None
+_conn_init_lock = threading.Lock()
+_write_lock = threading.Lock()
+
 
 def get_db():
-    conn = sqlite3.connect(DB_PATH, timeout=10)
-    conn.row_factory = sqlite3.Row
-    conn.execute("PRAGMA journal_mode=WAL")
-    conn.execute("PRAGMA busy_timeout=5000")
-    conn.execute("PRAGMA foreign_keys=ON")
-    return conn
+    """全局单连接，所有线程共享"""
+    global _conn
+    if _conn is None:
+        with _conn_init_lock:
+            if _conn is None:
+                _conn = sqlite3.connect(DB_PATH, timeout=10, check_same_thread=False)
+                _conn.row_factory = sqlite3.Row
+                _conn.execute("PRAGMA journal_mode=WAL")
+                _conn.execute("PRAGMA busy_timeout=5000")
+                _conn.execute("PRAGMA foreign_keys=ON")
+    return _conn
+
+
+@contextmanager
+def write_transaction():
+    """写事务上下文管理器：串行化所有写操作"""
+    with _write_lock:
+        conn = get_db()
+        try:
+            yield conn
+            conn.commit()
+        except Exception:
+            conn.rollback()
+            raise
 
 
 def init_db():
-    conn = get_db()
+    conn = sqlite3.connect(DB_PATH, timeout=10)
+    conn.execute("PRAGMA journal_mode=WAL")
+    conn.execute("PRAGMA foreign_keys=ON")
     conn.executescript("""
         CREATE TABLE IF NOT EXISTS sessions (
             id TEXT PRIMARY KEY,
