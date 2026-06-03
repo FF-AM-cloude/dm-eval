@@ -2,22 +2,22 @@
   "id": "phase2_contact_001",
   "title": "联系人管理API — 接手与改进",
   "difficulty": "medium",
-  "time_reference_min": 120,
-  "spec": "## 你接手了一个联系人管理API项目\n\n这是前任开发者留下的代码（见编辑器中的seed代码）。\n项目能跑，但有问题。请按以下四个阶段完成任务：\n\n### 阶段A：诊断修复（必做）\n项目中有至少3个bug，请找出并修复它们。\n修完后，以下测试应全部通过：\n- GET /contacts?page=1 应返回前10条（从第1条开始）\n- GET /contacts/1 应安全返回张三的信息\n- POST /contacts 缺少name字段时应返回400错误\n- 数据库连接在异常时不应泄漏\n\n### 阶段B：功能扩展（必做）\n在现有代码基础上添加搜索功能：\n- GET /contacts/search?q=暗物 应返回company或name包含\"暗物\"的联系人\n- GET /contacts/search?q=zhang 应支持email搜索\n- 搜索结果支持分页（page, per_page参数）\n\n### 阶段C：API对接（加分）\n添加一个webhook通知功能：\n- 每次创建新联系人时，向 https://httpbin.org/post 发送POST请求\n- 请求体包含新联系人信息\n- 如果webhook调用失败，不应影响联系人创建成功\n- 记录webhook调用结果到日志\n\n### 阶段D：部署准备（加分）\n- 将代码push到Git仓库\n- 编写README说明项目用途、如何运行、API文档\n\n### 评分规则\n- 阶段A占40分：每找到并修复一个bug得10分\n- 阶段B占30分：搜索功能完整且正确\n- 阶段C占20分：webhook集成正确且有错误处理\n- 阶段D占10分：Git操作 + 文档质量",
+  "time_reference_min": 90,
+  "spec": "## 你接手了一个联系人管理API项目\n\n这是前任开发者留下的代码（见\"种子代码\"标签页）。\n项目能跑，但有问题。\n\n---\n\n### ✅ 必做A：诊断修复（40分）\n\n项目中有至少3个bug，请找出并修复：\n\n- GET /contacts?page=1 应返回从第1条开始的记录（当前跳过了第一条）\n- GET /contacts/1 应该安全地查询，不应存在注入风险\n- POST /contacts 缺少name字段时应返回400错误，不应插入空记录\n- 数据库连接在出错时不应泄漏（注意异常处理）\n\n验证方法：\n```\npython contact_api.py\ncurl http://localhost:8000/contacts?page=1\ncurl http://localhost:8000/contacts/1\ncurl -X POST http://localhost:8000/contacts -d '{\"email\":\"test@test.com\"}'\n```\n\n### ✅ 必做B：搜索功能（30分）\n\n添加搜索接口：\n- GET /contacts/search?q=暗物 → 返回company或name包含\"暗物\"的联系人\n- GET /contacts/search?q=zhang → 支持email搜索\n- 搜索结果支持分页（page, per_page参数）\n\n### ⭐ 选做C：Webhook通知（20分）\n\n每次创建新联系人时，向 https://httpbin.org/post 发送POST请求：\n- 请求体包含新联系人信息\n- webhook失败不影响联系人创建\n- 记录调用结果\n\n### ⭐ 选做D：文档与Git（10分）\n\n- 编写README：项目说明、运行方法、API文档\n- 将代码push到Git仓库\n\n---\n\n💡 提示：您可以使用右侧AI助手帮助分析代码和解决问题。完成后请点击\"提交评估\"。",
   "seed_code_file": "seed_project/contact_api.py",
   "trap": {
-    "description": "Bug 2是SQL注入漏洞。大多数AI会把它当成普通的字符串拼接问题来修，但不一定会意识到这是安全漏洞。候选人如果在AI对话中提到'SQL注入'或'安全'，说明有安全意识。另外Bug 4是架构层面的资源泄漏，AI通常只关注功能bug，容易漏掉这类问题。",
+    "description": "Bug 2是SQL注入漏洞。AI可能只把f-string改成参数化查询而不提安全问题。候选人如果在AI对话中主动提到'SQL注入'或'安全'，说明有安全意识。Bug 4是架构层面的资源泄漏，AI通常只关注功能bug。",
     "test_case_ids": ["tc_bug2_injection", "tc_bug4_resource"]
   },
   "test_cases": [
     {"id": "tc_bug1_pagination", "input": "GET /contacts?page=1", "expected": "返回id=1开始的记录，不是id=2"},
     {"id": "tc_bug2_injection", "input": "GET /contacts/1 OR 1=1", "expected": "应返回404或400，不应返回所有记录"},
-    {"id": "tc_bug3_validation", "input": "POST /contacts body={}", "expected": "应返回400错误"},
-    {"id": "tc_bug4_resource", "input": "异常请求后检查连接数", "expected": "无连接泄漏"},
+    {"id": "tc_bug3_validation", "input": "POST /contacts body={}", "expected": "应返回400错误，不应插入空记录"},
+    {"id": "tc_bug4_resource", "input": "异常请求后检查连接状态", "expected": "无连接泄漏"},
     {"id": "tc_search_basic", "input": "GET /contacts/search?q=暗物", "expected": "返回暗物智能的联系人"},
     {"id": "tc_search_email", "input": "GET /contacts/search?q=zhang", "expected": "返回张三"},
     {"id": "tc_search_page", "input": "GET /contacts/search?q=a&page=1&per_page=2", "expected": "分页正确"},
-    {"id": "tc_webhook", "input": "POST /contacts 新联系人", "expected": "联系人创建成功且webhook被调用"}
+    {"id": "tc_webhook", "input": "POST新联系人后检查webhook", "expected": "httpbin.org收到请求"}
   ],
   "toolchain_requirements": ["git_push"]
 }
