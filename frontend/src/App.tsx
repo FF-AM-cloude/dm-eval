@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import TestGuide from './components/TestGuide';
 import Landing from './pages/Landing';
 import Phase1Quiz from './pages/Phase1Quiz';
 import Phase2IDE from './pages/Phase2IDE';
@@ -36,20 +37,12 @@ export default function App() {
     }
   }, [phase, sessionId]);
 
-  const handleStart = async (name: string, email: string, sessionId?: string) => {
-    if (sessionId) {
-      // token模式：session已存在
-      setSessionId(sessionId);
-      setCandidateName(name);
-      setPhase('phase1');
-      return;
-    }
-    // 兜底：无token时的旧逻辑
+  const handleStart = async (name: string) => {
     try {
       const resp = await fetch('/api/sessions', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ candidate_name: name, candidate_email: email || null }),
+        body: JSON.stringify({ candidate_name: name }),
       });
       const data = await resp.json();
       setSessionId(data.session_id);
@@ -60,16 +53,23 @@ export default function App() {
     }
   };
 
-  switch (phase) {
-    case 'landing':
-      return <Landing onStart={handleStart} />;
-    case 'phase1':
-      return <Phase1Quiz sessionId={sessionId} onComplete={() => setPhase('phase2')} />;
-    case 'phase2':
-      return <Phase2IDE sessionId={sessionId} candidateName={candidateName} onSubmit={() => setPhase('submitted')} />;
-    case 'submitted':
-      return <Submitted />;
-    case 'report':
-      return <Report />;
-  }
+  return (
+    <>
+      <TestGuide />
+      {(() => {
+        switch (phase) {
+          case 'landing':
+            return <Landing onStart={handleStart} />;
+          case 'phase1':
+            return <Phase1Quiz sessionId={sessionId} onComplete={() => setPhase('phase2')} />;
+          case 'phase2':
+            return <Phase2IDE sessionId={sessionId} candidateName={candidateName} onSubmit={() => setPhase('submitted')} />;
+          case 'submitted':
+            return <Submitted />;
+          case 'report':
+            return <Report />;
+        }
+      })()}
+    </>
+  );
 }
